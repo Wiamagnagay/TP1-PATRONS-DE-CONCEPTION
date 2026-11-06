@@ -98,6 +98,61 @@ classDiagram
  
 Ce diagramme suit le code. GitHub l'affiche directement ; pour le prévisualiser dans l'IDE : extension *Markdown Preview Mermaid Support* dans VS Code, option Mermaid des réglages Markdown dans IntelliJ.
  
+## Diagramme avec le patron Visitor
+
+```mermaid
+classDiagram
+    class Mediatheque {
+        +addItem(i : Item)
+        +accept(v : ItemVisitor)
+        +printCatalog()
+        +printOnlyBooks()
+        +printOnlyCDs()
+    }
+    class Item {
+        <<abstract>>
+        -title : String
+        +accept(v : ItemVisitor)*
+        +toString() String
+    }
+    class Book {
+        -author : String
+        +accept(v : ItemVisitor)
+        +toString() String
+    }
+    class CD {
+        -numberOfTracks : int
+        +accept(v : ItemVisitor)
+        +toString() String
+    }
+    class ItemVisitor {
+        <<interface>>
+        +visit(b : Book)
+        +visit(c : CD)
+    }
+    class PrintCatalogVisitor {
+        +visit(b : Book)
+        +visit(c : CD)
+    }
+    class PrintOnlyBooksVisitor {
+        +visit(b : Book)
+        +visit(c : CD)
+    }
+    class PrintOnlyCDsVisitor {
+        +visit(b : Book)
+        +visit(c : CD)
+    }
+    Mediatheque "1" *--> "*" Item : -items
+    Item <|-- Book
+    Item <|-- CD
+    ItemVisitor <|.. PrintCatalogVisitor
+    ItemVisitor <|.. PrintOnlyBooksVisitor
+    ItemVisitor <|.. PrintOnlyCDsVisitor
+    Item ..> ItemVisitor : accept()
+    ItemVisitor ..> Book : visit()
+    ItemVisitor ..> CD : visit()
+```
+
 ## 3. Travailler
  
 Faites un commit à chaque étape franchie, et poussez-le tout de suite :

@@ -10,7 +10,17 @@ public class Main {
         mediatheque.addItem( new CD(20, "TOTO"));
 
         mediatheque.printCatalog();
-        //mediatheque.printOnlyBooks();
+         System.out.println("=== Catalogue complet ===");
+        mediatheque.accept(new PrintCatalogVisitor());
+
+        System.out.println("\n=== Livres seulement ===");
+        mediatheque.accept(new PrintOnlyBooksVisitor());
+
+        System.out.println("\n=== CD seulement ===");
+        mediatheque.accept(new PrintOnlyCDsVisitor());
+
+
+//mediatheque.printOnlyBooks();
         //mediatheque.printOnlyCDs();
     }
 }

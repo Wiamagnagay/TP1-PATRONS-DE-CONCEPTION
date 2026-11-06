@@ -14,7 +14,7 @@ public abstract class Item {
 		this.title = title;
 	}
 
-	public abstract void print();
+	public abstract void accept(ItemVisitor visitor);
 
 	@Override
 	public String toString() {
